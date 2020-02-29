@@ -28,23 +28,14 @@ be able to create a new key when rotating your access keys.
 
 ## Installation
 
-AWS Rotate IAM Keys is supported by all major platforms.
-
-### Ubuntu
-
-```
-sudo add-apt-repository ppa:rhyeal/aws-rotate-iam-keys
-sudo apt-get update
-sudo apt-get install aws-rotate-iam-keys
-```
+AWS Rotate IAM Keys is supported by MaOS utilizing homebrew.
 
 ### MacOS
 
-Requires [Homebrew](https://brew.sh/) to install. I am hoping to be included in
-Homebrew Core soon!
+Requires [Homebrew](https://brew.sh/) to install. 
 
 ```
-brew tap rhyeal/aws-rotate-iam-keys https://github.com/rhyeal/aws-rotate-iam-keys
+brew tap juantovarius/aws-rotate-iam-keys
 brew install aws-rotate-iam-keys
 ```
 
@@ -53,35 +44,6 @@ dependent packages. You can skip this using `brew install aws-rotate-iam-keys --
 
 ***IMPORTANT:*** You must install your own scheduled job for automated key
 rotation. See [Configuration](#configuration).
-
-### Debian
-
-```
-wget -q https://github.com/rhyeal/aws-rotate-iam-keys/raw/master/aws-rotate-iam-keys.0.9.5.deb -O aws-rotate-iam-keys.deb
-sudo dpkg -i aws-rotate-iam-keys.deb
-sudo apt-get install -f
-rm aws-rotate-iam-keys.deb # optional file clean up
-```
-
-### Other Linux
-
-```
-git clone https://github.com/rhyeal/aws-rotate-iam-keys.git
-sudo cp aws-rotate-iam-keys/src/bin/aws-rotate-iam-keys /usr/bin/
-rm -rf aws-rotate-iam-keys
-```
-
-***IMPORTANT:*** You must install your own cron job for automated key
-rotation. See [Configuration](#configuration).
-
-### Windows
-
-[Click here](https://aws-rotate-iam-keys.com/aws-rotate-iam-keys.ps1) to
-download the executable PowerShell script.
-
-Simply place this in any directory and then run it. It will install the
-Scheduled Task to rotate your keys nightly upon first run and will rotate your
-keys on each run thereafter.
 
 ### AWS
 
@@ -156,28 +118,6 @@ the scheduled job installed on Ubuntu, Debian and Windows only rotates keys for
 your default profile. If you need to rotate keys for other profiles you will
 need to edit the job or add more jobs.
 
-### Ubuntu/Debian
-
-A default job was added to your crontab during installation. This job rotates
-keys for your default profile. To rotate keys for other profiles you will need
-to edit your crontab and modify the configuration. Open your crontab by typing:
-
-```
-EDITOR=nano crontab -e
-```
-
-Look for a line like:
-
-```
-33 4 * * * /usr/bin/aws-rotate-iam-keys --profile default >/dev/null #rotate AWS keys daily
-```
-
-Edit the profile for the job if necessary. Add further jobs if you need to
-invoke `aws-rotate-iam-keys` multiple times to rotate multiple profiles.
-
-Save your crontab with Ctrl + O and then press [Enter]. Exit and apply changes
-with Ctrl + X. That's it!
-
 ### MacOS
 
 [Launchd](http://www.launchd.info/) is the MacOS replacement for cron. Unlike
@@ -240,63 +180,3 @@ writes output to a file in the `/tmp` directory matching the job name, e.g.
 ```
 /tmp/homebrew.mxcl.aws-rotate-iam-keys.log
 ```
-
-### Other Linux
-
-Add a cron job to run AWS Rotate IAM Keys nightly. Open your crontab by typing:
-
-```
-EDITOR=nano crontab -e
-```
-
-Copy and paste the following line into the end of the crontab file:
-
-```
-33 4 * * * /usr/bin/aws-rotate-iam-keys --profile default >/dev/null #rotate AWS keys daily
-```
-
-Edit the profile for the job if necessary. Add further jobs if you need to
-invoke `aws-rotate-iam-keys` multiple times to rotate multiple profiles.
-
-Note: your version of cron might skip job invocations when the computer is
-asleep, so you may need to schedule the job to run at a time when your
-computer is likely to be awake.
-
-Save your crontab with Ctrl + O and then press [Enter]. Exit and apply changes
-with Ctrl + X. That's it!
-
-### Windows
-
-AWS Rotate IAM Keys is set up to automatically schedule a task for you upon
-first run. If you want to edit the profiles that are being updated, you need to
-modify the task using [Task
-Scheduler](https://docs.microsoft.com/en-us/windows/desktop/taskschd/task-scheduler-start-page).
-Look for a task named "AWS Rotate IAM Keys" and modify the `-profile` parameter
-from `default` to a comma-separated list of your profile names.
-
-If you move the .ps1 script from the initial location where you first ran it,
-you will need to modify the path in the task to point to the correct script
-location.
-
-## On the Web!
-
-Visit us on the web at
-[aws-rotate-iam-keys.com](https://aws-rotate-iam-keys.com) for full installation
-instructions in a snazzy single-page UI. It's basically this README with some
-colors.
-
-## Checksums
-
-### Ubuntu/Debian
-
-```
-echo 3e735a9f2b62aa71432e663ef5c1018c aws-rotate-iam-keys.0.9.5.deb | md5sum --check -
-```
-
-### MacOS
-
-Homebrew gets the release zip of the entire repo: `SHA256 ccbd38ba4c8725438961b0e9a23a5c713b91568e9ebe6f3b687246140b82f89c`
-
-### Windows
-
-PowerShell script file: `MD5 7b78cc773ac69f55dba4caca4de6b437  Windows/aws-rotate-iam-keys.ps1`
