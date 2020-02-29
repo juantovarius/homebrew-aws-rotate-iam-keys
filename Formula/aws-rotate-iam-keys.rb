@@ -2,7 +2,6 @@ class AwsRotateIamKeys < Formula
   desc "Automatically rotate your IAM keys daily"
   homepage "https://www.qualpay.com"
   url "https://github.com/juantovarius/homebrew-aws-rotate-iam-keys/archive/v0.9.2.tar.gz"
-  #sha256 "ccbd38ba4c8725438961b0e9a23a5c713b91568e9ebe6f3b687246140b82f89c"
   sha256 "747de3036b491f94f6fbf5dfbddc3e29652cf0517e94af65cb2de5619c5c9c96"
   depends_on "awscli" => :recommended
   depends_on "gnu-getopt"
